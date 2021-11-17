@@ -1,18 +1,41 @@
+import 'package:fint/explore1.dart';
+import 'package:fint/homescreen1.dart';
 import 'package:fint/introduction.dart';
+import 'package:fint/profilescreen.dart';
 import 'package:flutter/material.dart';
 // import 'package:flame/flame.dart';
 // import 'package:flutter_svg/svg.dart';
 // import 'package:flutter_svg/flutter_svg.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:intl/intl.dart';
 
-class Home2 extends StatefulWidget {
+class Home3 extends StatefulWidget {
+  final String mobile;
+  const Home3({Key? key, required this.mobile}) : super(key: key);
   @override
-  _Home2State createState() => _Home2State();
+  _Home3State createState() => _Home3State();
 }
 
-class _Home2State extends State<Home2> {
+class _Home3State extends State<Home3> {
   int _value=0;
+  String user_id="user";
   int _value2=0;
+  final mesage = FirebaseDatabase.instance.reference();
   get undefined => null;
+  final myController = TextEditingController();
+  final myController2 = TextEditingController();
+  late String gender;
+
+  int calculateAge(String birthDateString) {
+    String datePattern = "dd-MM-yyyy";
+    DateTime birthDate = DateFormat(datePattern).parse(birthDateString);
+    DateTime today = DateTime.now();
+    int yearDiff = today.year - birthDate.year;
+    int monthDiff = today.month - birthDate.month;
+    int dayDiff = today.day - birthDate.day;
+    return yearDiff;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,246 +53,155 @@ class _Home2State extends State<Home2> {
                           Positioned(
                             top:MediaQuery.of(context).size.height*(10/100),
                             // right: MediaQuery.of(context).size.width*(1/30),
-                            // left: MediaQuery.of(context).size.width*(1/30),
-                            child: Container(
-                                width: MediaQuery.of(context).size.width,
-                                height: MediaQuery.of(context).size.height*(35/100),
-                                decoration: BoxDecoration(
-                                  image : DecorationImage(
-                                      image: AssetImage('assets/images/tesla.png'),
-                                      fit: BoxFit.fitWidth
-                                  ),
-                                )
-                            ),
+                            left: MediaQuery.of(context).size.width*(10/100),
+                            child: Text('Introduce yourself to us 👋', textAlign: TextAlign.left, style: TextStyle(
+                                color: Color.fromRGBO(109, 109, 109, 1),
+                        fontFamily: 'Geeza Pro',
+                        fontSize: 18,
+                        letterSpacing: 0 /*percentages not used in flutter. defaulting to zero*/,
+                        fontWeight: FontWeight.normal,
+                        height: 1
+                        ),),
                           ),
                         ],
                       ),
                     ),
                   ),Positioned(
-                      top: MediaQuery.of(context).size.height*(47/100),
-                      left: MediaQuery.of(context).size.width*(2/100),
-                      right: MediaQuery.of(context).size.width*(2/100),
-                      child: Container(
-                          height: MediaQuery.of(context).size.height*(40/100),
-                          width: MediaQuery.of(context).size.width,
-                          decoration: BoxDecoration(
-                            borderRadius : BorderRadius.only(
-                              topLeft: Radius.circular(20),
-                              topRight: Radius.circular(20),
-                              bottomLeft: Radius.circular(20),
-                              bottomRight: Radius.circular(20),
-                            ),
-                            boxShadow : [BoxShadow(
-                                color: Color.fromRGBO(0, 0, 0, 0.05000000074505806),
-                                offset: Offset(0,2),
-                                blurRadius: 2
-                            )],
-                            color : Color.fromRGBO(255, 255, 255, 1),
-                            border : Border.all(
-                              color: Color.fromRGBO(229, 229, 229, 1),
-                              width: 1,
-                            ),
-                          )
-                      )
-                  ),
-                Positioned(
-                    top: MediaQuery.of(context).size.height*(43/100),
-                    left: MediaQuery.of(context).size.width*(2/100),
-                    child: Text('When you want to achieve this goal by', textAlign: TextAlign.left, style: TextStyle(
-                        color: Color.fromRGBO(34, 34, 32, 1),
-                        fontFamily: 'Geeza Pro',
-                        fontSize: 14,
-                        letterSpacing: 0 /*percentages not used in flutter. defaulting to zero*/,
-                        fontWeight: FontWeight.normal,
-                        height: 1.5 /*PERCENT not supported*/
-                    ),)
-                ),
-                  Positioned(
-                      top: MediaQuery.of(context).size.height*(45/100),
-                      left: MediaQuery.of(context).size.width*(2/100),
-                      child: Container(
-                          width: MediaQuery.of(context).size.width,
-                          height: 39,
-                          decoration: BoxDecoration(
-                            borderRadius : BorderRadius.only(
-                              topLeft: Radius.circular(5),
-                              topRight: Radius.circular(5),
-                              bottomLeft: Radius.circular(5),
-                              bottomRight: Radius.circular(5),
-                            ),
-                            color : Color.fromRGBO(244, 242, 251, 1),
-                            border : Border.all(
-                              color: Color.fromRGBO(244, 242, 251, 1),
-                              width: 0.10000000149011612,
-                            ),
-                          )
-                      )
-                  ),Positioned(
-                      top: 6.727272033691406,
-                      left: 10,
-                      child: Text('JAN 2023', textAlign: TextAlign.center, style: TextStyle(
-                          color: Color.fromRGBO(0, 0, 0, 1),
+                      top: MediaQuery.of(context).size.height*(15/100),
+                      left: MediaQuery.of(context).size.width*(10/100),
+                      child: Text('Enter you First Name, Gender, and Date of Birth', textAlign: TextAlign.left, style: TextStyle(
+                          color: Color.fromRGBO(181, 181, 181, 1),
                           fontFamily: 'Geeza Pro',
                           fontSize: 14,
+                          letterSpacing: 0 /*percentages not used in flutter. defaulting to zero*/,
+                          fontWeight: FontWeight.normal,
+                          height: 1
+                      ),),
+                  ),
+                Positioned(
+                    top: MediaQuery.of(context).size.height*(30/100),
+                    left: MediaQuery.of(context).size.width*(10/100),
+                    right: MediaQuery.of(context).size.width*(10/100),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width*(80/100),
+                      height: MediaQuery.of(context).size.height*(10/100),
+                      child: TextField(
+                          controller: myController,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Full Name',
+                            hintText: 'Full Name',
+                          ),
+                        ),
+                      ),
+                ),
+                  Positioned(
+                      top: MediaQuery.of(context).size.height*(40/100),
+                      left: MediaQuery.of(context).size.width*(20/100),
+                      child: TextButton(
+                        style: ButtonStyle(
+                          foregroundColor: MaterialStateProperty.all<Color>(Colors.grey),
+                        ),
+                        onPressed: () {
+                          gender="male";
+                          print("male");
+                        },
+                        child: Text('Male'),
+                      )
+                  ),
+                  Positioned(
+                      top: MediaQuery.of(context).size.height*(40/100),
+                      right: MediaQuery.of(context).size.width*(20/100),
+                      child: TextButton(
+                        style: ButtonStyle(
+                          foregroundColor: MaterialStateProperty.all<Color>(Colors.grey),
+                        ),
+                        onPressed: () {
+                          gender="female";
+                          print("female");
+                        },
+                        child: Text('Female'),
+                      )
+                  ),
+                  Positioned(
+                      top: MediaQuery.of(context).size.height*(50/100),
+                      left: MediaQuery.of(context).size.width*(30/100),
+                      child: Text('Date of Birth', textAlign: TextAlign.center, style: TextStyle(
+                          color: Color.fromRGBO(0, 0, 0, 1),
+                          fontFamily: 'Geeza Pro',
+                          fontSize: 18,
                           letterSpacing: 0 /*percentages not used in flutter. defaulting to zero*/,
                           fontWeight: FontWeight.normal,
                           height: 1
                       ),)
                   ),
                   Positioned(
-                      top: MediaQuery.of(context).size.height*(48/100),
-                      left: MediaQuery.of(context).size.width*(1/15),
-                      child: Text('Target', textAlign: TextAlign.left, style: TextStyle(
-                          color: Color.fromRGBO(34, 34, 32, 1),
-                          fontFamily: 'Geeza Pro',
-                          fontSize: 18,
-                          letterSpacing: 0 /*percentages not used in flutter. defaulting to zero*/,
-                          fontWeight: FontWeight.normal,
-                          height: 1.5 /*PERCENT not supported*/
-                      ),)
+                    top: MediaQuery.of(context).size.height*(55/100),
+                    left: MediaQuery.of(context).size.width*(10/100),
+                      right: MediaQuery.of(context).size.width*(10/100),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width*(80/100),
+                        height: MediaQuery.of(context).size.height*(10/100),
+                        child: TextField(
+                          controller: myController2,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            hintText: 'DD-MM-YYYY',
+                          ),
+                        ),
+                      ),
                   ),
                   Positioned(
-                      top: MediaQuery.of(context).size.height*(48/100),
-                      right: MediaQuery.of(context).size.width*(1/15),
-                      child: Text(_value.toString(), textAlign: TextAlign.left, style: TextStyle(
-                          color: Color.fromRGBO(34, 34, 32, 1),
-                          fontFamily: 'Geeza Pro',
-                          fontSize: 18,
-                          letterSpacing: 0 /*percentages not used in flutter. defaulting to zero*/,
-                          fontWeight: FontWeight.normal,
-                          height: 1.5 /*PERCENT not supported*/
-                      ),)
-                  ),
-                  Positioned(
-                      top: MediaQuery.of(context).size.height*(60/100),
-                      left: MediaQuery.of(context).size.width*(1/15),
-                      child: Text('Mode', textAlign: TextAlign.left, style: TextStyle(
-                          color: Color.fromRGBO(34, 34, 32, 1),
-                          fontFamily: 'Geeza Pro',
-                          fontSize: 18,
-                          letterSpacing: 0 /*percentages not used in flutter. defaulting to zero*/,
-                          fontWeight: FontWeight.normal,
-                          height: 1.5 /*PERCENT not supported*/
-                      ),)
-                  ),
-                  Positioned(
-                    top: MediaQuery.of(context).size.height*(63/100),
-                    left: MediaQuery.of(context).size.width*(1/15),
-                    right: MediaQuery.of(context).size.width*(1/15),
-                    child: SliderTheme(
-                        data: SliderThemeData(
-                          thumbColor: Color(0XFF672D71),
-                          activeTrackColor: Color(0XFFDE9ECC),
-                          inactiveTrackColor: Color(0XFFBF72DC),
-                          trackHeight: 4.0,),
-                        child: Slider(
-                            value: _value2.toDouble(),
-                            min: 0.0,
-                            max: 100000.0,
-                            divisions: 100,
-                            label: _value2.round().toString(),
-                            onChanged: (double newValue) {
-                              setState(() {
-                                _value2 = newValue.round();
-                              });
-                            },
-                            semanticFormatterCallback: (double newValue) {
-                              return '${newValue.round()} dollars';
-                            }
+                    top: MediaQuery.of(context).size.height*(70/100),
+                    left: MediaQuery.of(context).size.width*(1/7),
+                    child: Container(
+                        width: MediaQuery.of(context).size.width*(3/7),
+                        height: 5,
+                        decoration: BoxDecoration(
+                          image : DecorationImage(
+                              image: AssetImage('assets/images/Line1.png'),
+                              fit: BoxFit.fitWidth
+                          ),
                         )
                     ),
                   ),
                   Positioned(
-                      top: MediaQuery.of(context).size.height*(60/100),
-                      right: MediaQuery.of(context).size.width*(1/15),
-                      child: Text(_value2.toString(), textAlign: TextAlign.left, style: TextStyle(
-                          color: Color.fromRGBO(34, 34, 32, 1),
-                          fontFamily: 'Geeza Pro',
-                          fontSize: 18,
-                          letterSpacing: 0 /*percentages not used in flutter. defaulting to zero*/,
-                          fontWeight: FontWeight.normal,
-                          height: 1.5 /*PERCENT not supported*/
-                      ),)
+                    top: MediaQuery.of(context).size.height*(70/100),
+                    right: MediaQuery.of(context).size.width*(1/7),
+                    child: Container(
+                        width: MediaQuery.of(context).size.width*(2/7),
+                        height: 5,
+                        decoration: BoxDecoration(
+                          image : DecorationImage(
+                              image: AssetImage('assets/images/Line2.png'),
+                              fit: BoxFit.fitWidth
+                          ),
+                        )
+                    ),
                   ),
                   Positioned(
-                      top:MediaQuery.of(context).size.height*(70/100),
-                      left: MediaQuery.of(context).size.width*(2/15),
-                      right: MediaQuery.of(context).size.width*(8/15),
-                      child: Container(
-                          width: MediaQuery.of(context).size.width*(5/15),
-                          height: MediaQuery.of(context).size.height*(6/100),
-                          decoration: BoxDecoration(
-                            borderRadius : BorderRadius.only(
-                              topLeft: Radius.circular(5),
-                              topRight: Radius.circular(5),
-                              bottomLeft: Radius.circular(5),
-                              bottomRight: Radius.circular(5),
-                            ),
-                            color : Color.fromRGBO(200, 188, 232, 0.20000000298023224),
-                          )
-                      )
-                  ),
-                  Positioned(
-                      top: MediaQuery.of(context).size.height*(72/100),
-                      left: MediaQuery.of(context).size.width*(2/15),
-                      right: MediaQuery.of(context).size.width*(8/15),
-                      child: Text('Montly SIP', textAlign: TextAlign.center, style: TextStyle(
-                          color: Color.fromRGBO(82, 80, 88, 1),
-                          fontFamily: 'Geeza Pro',
-                          fontSize: 14,
-                          letterSpacing: 0 /*percentages not used in flutter. defaulting to zero*/,
-                          fontWeight: FontWeight.normal,
-                          height: 1.5 /*PERCENT not supported*/
-                      ),)
-                  ),
-                  Positioned(
-                      top:MediaQuery.of(context).size.height*(70/100),
-                      right: MediaQuery.of(context).size.width*(2/15),
-                      left: MediaQuery.of(context).size.width*(8/15),
-                      child: Container(
-                          width: MediaQuery.of(context).size.width*(5/15),
-                          height: MediaQuery.of(context).size.height*(6/100),
-                          decoration: BoxDecoration(
-                            borderRadius : BorderRadius.only(
-                              topLeft: Radius.circular(5),
-                              topRight: Radius.circular(5),
-                              bottomLeft: Radius.circular(5),
-                              bottomRight: Radius.circular(5),
-                            ),
-                            color : Color.fromRGBO(200, 188, 232, 0.20000000298023224),
-                          )
-                      )
-                  ),
-                  Positioned(
-                      top: MediaQuery.of(context).size.height*(72/100),
-                      right: MediaQuery.of(context).size.width*(2/15),
-                      left: MediaQuery.of(context).size.width*(8/15),
-                      child: Text('Weekly SIP', textAlign: TextAlign.center, style: TextStyle(
-                          color: Color.fromRGBO(82, 80, 88, 1),
-                          fontFamily: 'Geeza Pro',
-                          fontSize: 14,
-                          letterSpacing: 0 /*percentages not used in flutter. defaulting to zero*/,
-                          fontWeight: FontWeight.normal,
-                          height: 1.5 /*PERCENT not supported*/
-                      ),)
-                  ),
-                  Positioned(
-                    top:MediaQuery.of(context).size.height*(80/100),
-                    left: MediaQuery.of(context).size.width*(2/100),
-                    right: MediaQuery.of(context).size.width*(2/100),
+                    top: MediaQuery.of(context).size.height*(80/100),
+                    left: MediaQuery.of(context).size.width*(4/100),
+                    right: MediaQuery.of(context).size.width*(4/100),
                     child: GestureDetector(
                       onTap: (){
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => Intro()),
-                        );
+                        if (myController.text.isNotEmpty) {
+                          print(myController.text.toString());
+                          mesage.child(user_id).set({"Name" : myController.text,"Age" : calculateAge(myController2.text), "PhoneNum" : widget.mobile, "Gender" : gender});
+                          Navigator.push(
+                            context,
+                            // MaterialPageRoute(builder: (context) => Explore1(user_id: user_id, message: mesage,),),
+                            MaterialPageRoute(builder: (context) => Home1(user_id: user_id, message: mesage),),
+                          );
+                        } else {
+                        }
                       },
                       child: Container(
                           width: MediaQuery.of(context).size.width,
-                          height: MediaQuery.of(context).size.height*(7/100),
+                          height: MediaQuery.of(context).size.height*(1/10),
                           decoration: BoxDecoration(
                             image : DecorationImage(
-                                image: AssetImage('assets/images/below.png'),
+                                image: AssetImage('assets/images/Rectangle2.png'),
                                 fit: BoxFit.fitWidth
                             ),
                           )
@@ -277,97 +209,22 @@ class _Home2State extends State<Home2> {
                     ),
                   ),
                   Positioned(
-                      top: MediaQuery.of(context).size.height*(90/100),
-                      bottom: MediaQuery.of(context).size.height*(2/100),
-                      child: Container(
-                          height: MediaQuery.of(context).size.height*(10/100),
-                          width: MediaQuery.of(context).size.width,
-                          decoration: BoxDecoration(
-                            borderRadius : BorderRadius.only(
-                              // topLeft: Radius.circular(20),
-                              // topRight: Radius.circular(20),
-                              // bottomLeft: Radius.circular(20),
-                              // bottomRight: Radius.circular(20),
-                            ),
-                            boxShadow : [BoxShadow(
-                                color: Color.fromRGBO(0, 0, 0, 0.05000000074505806),
-                                offset: Offset(0,2),
-                                blurRadius: 2
-                            )],
-                            color : Color.fromRGBO(255, 255, 255, 1),
-                            border : Border.all(
-                              color: Color.fromRGBO(229, 229, 229, 1),
-                              width: 1,
-                            ),
-                          )
-                      )
-                  ),
-                  Positioned(
-                    top:MediaQuery.of(context).size.height*(92/100),
-                    left: MediaQuery.of(context).size.width*(3/18),
-                    child: GestureDetector(
-                      onTap: (){
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => Intro()),
-                        );
-                      },
-                      child: Container(
-                          width: MediaQuery.of(context).size.width*(2/18),
-                          height: MediaQuery.of(context).size.height*(4/100),
-                          decoration: BoxDecoration(
-                            image : DecorationImage(
-                                image: AssetImage('assets/images/Icon_home.png'),
-                                fit: BoxFit.fitWidth
-                            ),
-                          )
+                    top: MediaQuery.of(context).size.height*(83/100),
+                    left: MediaQuery.of(context).size.width*(45/100),
+                    child:  Text(
+                      '''Next''',
+                      overflow: TextOverflow.visible,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        height: 1.171875,
+                        fontSize: 14.0,
+                        fontFamily: 'Geeza Pro',
+                        fontWeight: FontWeight.w700,
+                        color: Color.fromARGB(255, 255, 255, 255),
+                        /* letterSpacing: 0.0, */
                       ),
                     ),
-                  ),
-                  Positioned(
-                    top:MediaQuery.of(context).size.height*(92/100),
-                    right: MediaQuery.of(context).size.width*(3/18),
-                    child: GestureDetector(
-                      onTap: (){
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => Intro()),
-                        );
-                      },
-                      child: Container(
-                          width: MediaQuery.of(context).size.width*(2/18),
-                          height: MediaQuery.of(context).size.height*(4/100),
-                          decoration: BoxDecoration(
-                            image : DecorationImage(
-                                image: AssetImage('assets/images/Icon_user_cirlce.png'),
-                                fit: BoxFit.fitWidth
-                            ),
-                          )
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top:MediaQuery.of(context).size.height*(92/100),
-                    right: MediaQuery.of(context).size.width*(8/18),
-                    child: GestureDetector(
-                      onTap: (){
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => Intro()),
-                        );
-                      },
-                      child: Container(
-                          width: MediaQuery.of(context).size.width*(2/18),
-                          height: MediaQuery.of(context).size.height*(4/100),
-                          decoration: BoxDecoration(
-                            image : DecorationImage(
-                                image: AssetImage('assets/images/Icon_schedule_square.png'),
-                                fit: BoxFit.fitWidth
-                            ),
-                          )
-                      ),
-                    ),
-                  ),
+                  )
                 ]
             )
         )

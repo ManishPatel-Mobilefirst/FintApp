@@ -1,8 +1,8 @@
+import 'package:fint/otpscreen.dart';
 import 'package:fint/signup2.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-// import 'package:flame/flame.dart';
-// import 'package:flutter_svg/svg.dart';
-// import 'package:flutter_svg/flutter_svg.dart';
+import 'package:roundcheckbox/roundcheckbox.dart';
 
 class Signup extends StatefulWidget {
   @override
@@ -11,7 +11,10 @@ class Signup extends StatefulWidget {
 
 class _SignupState extends State<Signup> {
   get undefined => null;
+  TextEditingController phoneController = TextEditingController();
 
+  var mobile_num="";
+  bool whatsapp=false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,12 +30,8 @@ class _SignupState extends State<Signup> {
                     child: Stack(
                         children: <Widget>[
                         Positioned(
-                            left: 28.0,
-                            top: 108.0,
-                            right: null,
-                            bottom: null,
-                            width: 320.0,
-                            height: 117.0,
+                            left: MediaQuery.of(context).size.width*(10/100),
+                            top: MediaQuery.of(context).size.height*(10/100),
                             child: Text(
                               '''Tell us your \nPhone Number 🎉''',
                               overflow: TextOverflow.visible,
@@ -45,8 +44,8 @@ class _SignupState extends State<Signup> {
                                 color: Color.fromARGB(255, 102, 102, 102),
                         ),)
                     ),  Positioned(
-                        top: 172,
-                        left: 28,
+                        left: MediaQuery.of(context).size.width*(10/100),
+                        top: MediaQuery.of(context).size.height*(17/100),
                         child: Text('Get started by entering your registered\nphone number', textAlign: TextAlign.left, style: TextStyle(
                             color: Color.fromRGBO(181, 181, 181, 1),
                             fontFamily: 'Geeza Pro',
@@ -55,81 +54,58 @@ class _SignupState extends State<Signup> {
                             fontWeight: FontWeight.normal,
                             height: 1
                         ),)
-                  ),    Positioned(
-                            left: 20.0,
-                            top: 273.0,
-                            right: null,
-                            bottom: null,
-                            width: 284.0,
-                            height: 32.0,
-                            child: RichText(
-                                overflow: TextOverflow.visible,
-                                textAlign: TextAlign.center,
-                                text: const TextSpan(
-                                  style: TextStyle(
-                                    height: 1.171875,
-                                    fontSize: 24.0,
-                                    fontFamily: 'Oxygen',
-                                    fontWeight: FontWeight.w700,
-                                    color: Color.fromARGB(255, 0, 0, 0),
+                  ),
+                              Positioned(
+                                left: MediaQuery.of(context).size.width*(10/100),
+                                right: MediaQuery.of(context).size.width*(10/100),
+                                top: MediaQuery.of(context).size.height*(30/100),
+                            child: Container(
+                              height: MediaQuery.of(context).size.height*(5/100),
+                              width: MediaQuery.of(context).size.width,
+                              margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                              child: CupertinoTextField(
+                                padding: const EdgeInsets.symmetric(horizontal: 16),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: const BorderRadius.all(Radius.circular(4))
+                                ),
+                                controller: phoneController,
+                                // clearButtonMode: OverlayVisibilityMode.editing,
+                                keyboardType: TextInputType.phone,
+                                maxLines: 1,
+                                placeholder: '+91 XXXXXXXXXX',
+                              ),
+                            ),
+                              ),
+                          Positioned(
+                              bottom: MediaQuery.of(context).size.height*(30/100),
+                              left: MediaQuery.of(context).size.height*(10/100),
+                              child: Row( // Replace with a Row for horizontal icon + text
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  RoundCheckBox(
+                                    onTap: (selected) {
+                                      whatsapp=true;
+                                    },
+                                    size: 30,
+                                    border: Border.all(
+                                      width: 1,
+                                      color: Color.fromRGBO(181, 181, 181, 1),
+                                    ),),
+                                  Text('WhatsApp updates', textAlign: TextAlign.left, style: TextStyle(
+                                      color: Color.fromRGBO(181, 181, 181, 1),
+                                      fontFamily: 'Geeza Pro',
+                                      fontSize: 14,
+                                      letterSpacing: 0 /*percentages not used in flutter. defaulting to zero*/,
+                                      fontWeight: FontWeight.normal,
+                                      height: 1
+                                  ),)
 
-                                    /* letterSpacing: 0.0, */
-                                  ),
-                                  children: [
-                                    TextSpan(
-                                      text: '''+91 ''',
-                                    ),
-                                    TextSpan(
-                                      text: '''|''',
-                                      style: TextStyle(
-                                        color: Color.fromARGB(255, 180, 180, 180),
-
-                                        /* letterSpacing: null, */
-                                      ),
-                                    ),
-                                    TextSpan(
-                                      text: ''' ''',
-                                    ),
-                                    TextSpan(
-                                      text: '''XXXXX-XXXXX''',
-                                      style: TextStyle(
-                                        color: Color.fromARGB(255, 230, 230, 230),
-
-                                        /* letterSpacing: null, */
-                                      ),
-                                    )
-                                  ],
-                                )),
+                                ],
+                              ),
                           ),
                           Positioned(
-                              top: 581,
-                              left: 62,
-                              child: Container(
-                                  width: 20,
-                                  height: 20,
-                                  decoration: BoxDecoration(
-                                    color : Color.fromRGBO(196, 196, 196, 0),
-                                    border : Border.all(
-                                      color: Color.fromRGBO(176, 176, 176, 1),
-                                      width: 2,
-                                    ),
-                                    borderRadius : BorderRadius.all(Radius.elliptical(20, 20)),
-                                  )
-                              )
-                          ),Positioned(
-                              top: 583,
-                              left: 95,
-                              child: Text('WhatsApp updates', textAlign: TextAlign.left, style: TextStyle(
-                                  color: Color.fromRGBO(181, 181, 181, 1),
-                                  fontFamily: 'Geeza Pro',
-                                  fontSize: 14,
-                                  letterSpacing: 0 /*percentages not used in flutter. defaulting to zero*/,
-                                  fontWeight: FontWeight.normal,
-                                  height: 1
-                              ),)
-                          ),
-                          Positioned(
-                            top:664,
+                            bottom: MediaQuery.of(context).size.height*(23/100),
                             left: MediaQuery.of(context).size.width*(1/7),
                             child: Container(
                                 width: MediaQuery.of(context).size.width*(1/7),
@@ -143,7 +119,7 @@ class _SignupState extends State<Signup> {
                             ),
                           ),
                           Positioned(
-                            top:664,
+                            bottom: MediaQuery.of(context).size.height*(23/100),
                             right: MediaQuery.of(context).size.width*(1/7),
                             child: Container(
                                 width: MediaQuery.of(context).size.width*(4/7),
@@ -157,16 +133,19 @@ class _SignupState extends State<Signup> {
                             ),
                           ),
                           Positioned(
-                            top:699,
-                            left:20,
-                            right:20,
+                            bottom: MediaQuery.of(context).size.height*(10/100),
+                            left: MediaQuery.of(context).size.width*(4/100),
+                            right: MediaQuery.of(context).size.width*(4/100),
                             child: GestureDetector(
                               onTap: (){
-
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => Signup2()),
-                                );
+                                  if (phoneController.text.isNotEmpty) {
+                                    print(phoneController.text.toString());
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => Otp(mobile: phoneController.text.toString(),)),
+                                    );
+                                  } else {
+                                  }
                               },
                                 child: Container(
                                     width: MediaQuery.of(context).size.width,
@@ -181,8 +160,8 @@ class _SignupState extends State<Signup> {
                               ),
                             ),
                           Positioned(
-                            top:728,
-                            left: 185,
+                            bottom: MediaQuery.of(context).size.height*(15/100),
+                            left: MediaQuery.of(context).size.width*(45/100),
                             child:  Text(
                               '''Next''',
                               overflow: TextOverflow.visible,
@@ -193,7 +172,6 @@ class _SignupState extends State<Signup> {
                                 fontFamily: 'Geeza Pro',
                                 fontWeight: FontWeight.w700,
                                 color: Color.fromARGB(255, 255, 255, 255),
-
                                 /* letterSpacing: 0.0, */
                               ),
                             ),

@@ -149,12 +149,12 @@ class _IntroState extends State<Intro> {
                               left:20,
                               right: 20,
                               child: GestureDetector(
-                                onTap: (){
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => Home2()),
-                                  );
-                                },
+                                // onTap: (){
+                                //   Navigator.push(
+                                //     context,
+                                //     MaterialPageRoute(builder: (context) => Home2()),
+                                //   );
+                                // },
                                 child: Container(
                                     width: MediaQuery.of(context).size.width,
                                     height: MediaQuery.of(context).size.height*(1/10),

@@ -1,12 +1,13 @@
 import 'package:fint/explore2.dart';
 import 'package:fint/introduction.dart';
+import 'package:fint/my_webview.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-// import 'package:flame/flame.dart';
-// import 'package:flutter_svg/flutter_svg.dart';
-// import 'package:flutter_svg/svg.dart';
-// import 'package:flutter_svg/flutter_svg.dart';
 
 class Explore1 extends StatefulWidget {
+  final String user_id;
+  final DatabaseReference message;
+  const Explore1({Key? key, required this.user_id, required this.message}) : super(key: key);
   @override
   _Explore1State createState() => _Explore1State();
 }
@@ -223,7 +224,8 @@ class _Explore1State extends State<Explore1> {
                           fontWeight: FontWeight.normal,
                           height: 1.5 /*PERCENT not supported*/
                       ),)
-                  ),Positioned(
+                  ),
+            Positioned(
                       top: MediaQuery.of(context).size.height*(49/100),
                       left: MediaQuery.of(context).size.width*(60/100),
                     child: Text('Quarterly', textAlign: TextAlign.left, style: TextStyle(
@@ -297,133 +299,24 @@ class _Explore1State extends State<Explore1> {
                       ),)
                   ),
                   Positioned(
-                      top: MediaQuery.of(context).size.height*(65/100),
-                      right:MediaQuery.of(context).size.width*(10/100),
-                      child: Container(
-                          width: MediaQuery.of(context).size.width*(40/100),
-                          height: MediaQuery.of(context).size.height*(5/100),
-                          decoration: BoxDecoration(
-                            borderRadius : BorderRadius.only(
-                              topLeft: Radius.circular(5),
-                              topRight: Radius.circular(5),
-                              bottomLeft: Radius.circular(5),
-                              bottomRight: Radius.circular(5),
-                            ),
-                            color : Color.fromRGBO(92, 185, 150, 1),
-                          )
-                      )
-                  ),Positioned(
-                    top: MediaQuery.of(context).size.height*(66/100),
+                    top: MediaQuery.of(context).size.height*(65/100),
                     right:MediaQuery.of(context).size.width*(17/100),
-                    child: GestureDetector(
-                        onTap: (){
-
-                          Navigator.push(
+                    child: TextButton(
+                      style: ButtonStyle(
+                        foregroundColor: MaterialStateProperty.all<Color>(Color.fromRGBO(92, 185, 150, 1)),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => Explore2()),
-                          );
-                       },
-                      child: Text('Invest Now', textAlign: TextAlign.center, style: TextStyle(
-                          color: Color.fromRGBO(255, 255, 255, 1),
-                          fontFamily: 'Georgia',
-                          fontSize: 18,
-                          letterSpacing: 0 /*percentages not used in flutter. defaulting to zero*/,
-                          fontWeight: FontWeight.normal,
-                          height: 1.5 /*PERCENT not supported*/
-                      ),)
-                  ),
-                  ),
-                  Positioned(
-                      top: MediaQuery.of(context).size.height*(90/100),
-                      bottom: MediaQuery.of(context).size.height*(2/100),
-                      child: Container(
-                          height: MediaQuery.of(context).size.height*(10/100),
-                          width: MediaQuery.of(context).size.width,
-                          decoration: BoxDecoration(
-                            borderRadius : BorderRadius.only(
-                              // topLeft: Radius.circular(20),
-                              // topRight: Radius.circular(20),
-                              // bottomLeft: Radius.circular(20),
-                              // bottomRight: Radius.circular(20),
-                            ),
-                            boxShadow : [BoxShadow(
-                                color: Color.fromRGBO(0, 0, 0, 0.05000000074505806),
-                                offset: Offset(0,2),
-                                blurRadius: 2
-                            )],
-                            color : Color.fromRGBO(255, 255, 255, 1),
-                            border : Border.all(
-                              color: Color.fromRGBO(229, 229, 229, 1),
-                              width: 1,
-                            ),
-                          )
-                      )
-                  ),
-                  Positioned(
-                    top:MediaQuery.of(context).size.height*(92/100),
-                    left: MediaQuery.of(context).size.width*(3/18),
-                    child: GestureDetector(
-                      onTap: (){
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => Intro()),
+                            MaterialPageRoute(
+                                builder: (context) => MyWebView(
+                          title: "Ticket",selectedUrl: "https://kite.trade/connect/login?api_key=2jklwbpwcmf4lddq&redirect_params=user_id%3D"+widget.user_id, user_id: widget.user_id, message: widget.message,
+                        ),
+                        ),
                         );
                       },
-                      child: Container(
-                          width: MediaQuery.of(context).size.width*(2/18),
-                          height: MediaQuery.of(context).size.height*(4/100),
-                          decoration: BoxDecoration(
-                            image : DecorationImage(
-                                image: AssetImage('assets/images/Icon_home.png'),
-                                fit: BoxFit.fitWidth
-                            ),
-                          )
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top:MediaQuery.of(context).size.height*(92/100),
-                    right: MediaQuery.of(context).size.width*(3/18),
-                    child: GestureDetector(
-                      onTap: (){
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => Intro()),
-                        );
-                      },
-                      child: Container(
-                          width: MediaQuery.of(context).size.width*(2/18),
-                          height: MediaQuery.of(context).size.height*(4/100),
-                          decoration: BoxDecoration(
-                            image : DecorationImage(
-                                image: AssetImage('assets/images/Icon_user_cirlce.png'),
-                                fit: BoxFit.fitWidth
-                            ),
-                          )
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top:MediaQuery.of(context).size.height*(92/100),
-                    right: MediaQuery.of(context).size.width*(8/18),
-                    child: GestureDetector(
-                      onTap: (){
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => Intro()),
-                        );
-                      },
-                      child: Container(
-                          width: MediaQuery.of(context).size.width*(2/18),
-                          height: MediaQuery.of(context).size.height*(4/100),
-                          decoration: BoxDecoration(
-                            image : DecorationImage(
-                                image: AssetImage('assets/images/Icon_schedule_square.png'),
-                                fit: BoxFit.fitWidth
-                            ),
-                          )
-                      ),
-                    ),
+                      child: Text('Login to Zerodha'),
+                    )
                   ),
                 ]
             )
