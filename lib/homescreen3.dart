@@ -2,15 +2,18 @@ import 'package:fint/explore1.dart';
 import 'package:fint/homescreen1.dart';
 import 'package:fint/introduction.dart';
 import 'package:fint/profilescreen.dart';
+import 'package:fint/utils/appWidgets.dart';
+import 'package:fint/utils/sharedPref.dart';
 import 'package:flutter/material.dart';
 // import 'package:flame/flame.dart';
 // import 'package:flutter_svg/svg.dart';
 // import 'package:flutter_svg/flutter_svg.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Home3 extends StatefulWidget {
-  final String mobile;
+  final String? mobile;
   const Home3({Key? key, required this.mobile}) : super(key: key);
   @override
   _Home3State createState() => _Home3State();
@@ -24,7 +27,7 @@ class _Home3State extends State<Home3> {
   get undefined => null;
   final myController = TextEditingController();
   final myController2 = TextEditingController();
-  late String gender;
+  late String gender="";
 
   int calculateAge(String birthDateString) {
     String datePattern = "dd-MM-yyyy";
@@ -34,6 +37,14 @@ class _Home3State extends State<Home3> {
     int monthDiff = today.month - birthDate.month;
     int dayDiff = today.day - birthDate.day;
     return yearDiff;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // SharedPreferences.getInstance();
+    // print('Check data......--:=> ${SharedPref.getBoolValueFromSF(SharedPref.ISDATA)}');
   }
 
   @override
@@ -186,14 +197,20 @@ class _Home3State extends State<Home3> {
                     child: GestureDetector(
                       onTap: (){
                         if (myController.text.isNotEmpty) {
-                          print(myController.text.toString());
-                          mesage.child(user_id).set({"Name" : myController.text,"Age" : calculateAge(myController2.text), "PhoneNum" : widget.mobile, "Gender" : gender});
-                          Navigator.push(
-                            context,
-                            // MaterialPageRoute(builder: (context) => Explore1(user_id: user_id, message: mesage,),),
-                            MaterialPageRoute(builder: (context) => Home1(user_id: user_id, message: mesage),),
-                          );
-                        } else {
+                          if(gender!=null && gender!=""){
+                            if(myController2.text.isNotEmpty){
+                              saveDataAndNavigate(myController.text,gender,myController2.text);
+                            }
+                            else{
+                              AppWidgets.showSnackBar(context, "Provide Birth Date");
+                            }
+                          }
+                          else{
+                            AppWidgets.showSnackBar(context, "Select Gender");
+                          }
+                        }
+                        else {
+                          AppWidgets.showSnackBar(context, "Enter Your Name");
                         }
                       },
                       child: Container(
@@ -228,6 +245,21 @@ class _Home3State extends State<Home3> {
                 ]
             )
         )
+    );
+  }
+
+  Future<void> saveDataAndNavigate(String name,String gender,String dob) async {
+    await SharedPref.getInstance();
+    await SharedPref.addBoolToSF(SharedPref.ISDATA, true);
+    await SharedPref.addStringToSF(SharedPref.NAME, name);
+    await SharedPref.addStringToSF(SharedPref.BIRTHDATE, dob);
+    await SharedPref.addStringToSF(SharedPref.GENDER, gender);
+    await SharedPref.addStringToSF(SharedPref.MOBILENUMBER, widget.mobile);
+    // mesage.child(user_id).set({"Name" : myController.text,"Age" : calculateAge(myController2.text), "PhoneNum" : widget.mobile, "Gender" : gender});
+    Navigator.push(context,
+      // MaterialPageRoute(builder: (context) => Explore1(user_id: user_id, message: mesage,),),
+      // MaterialPageRoute(builder: (context) => Home1(user_id: user_id, message: mesage),),
+      MaterialPageRoute(builder: (context) => Home1(user_id: user_id, message: mesage),),
     );
   }
 }

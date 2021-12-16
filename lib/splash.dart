@@ -1,5 +1,10 @@
+import 'package:fint/homescreen1.dart';
+import 'package:fint/homescreen3.dart';
+import 'package:fint/utils/sharedPref.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fint/signup.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:flame/flame.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -18,7 +23,30 @@ class _SplashScreenState extends State<SplashScreen> {
 
   _navigatetohome()async{
     await Future.delayed(Duration(milliseconds: 1500),(){});
-    Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>Signup()));
+    User? firebaseUser = FirebaseAuth.instance.currentUser;
+    Widget firstWidget;
+
+/*
+// Assign widget based on availability of currentUser
+    if (firebaseUser != null) {
+      final String? phone = firebaseUser.phoneNumber;
+      firstWidget = Home3(mobile: phone);
+    }
+    else {
+      firstWidget = Signup();
+    }
+    Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>firstWidget));
+*/
+
+     SharedPreferences.getInstance();
+    if(SharedPref.getBoolValueFromSF(SharedPref.ISDATA)==true){
+      Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>Home1(user_id: "user_id",message: "MESSAGE",)));
+    }else{
+      Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>Signup()));
+    }
+
+
+
   }
   @override
   Widget build(BuildContext context) {

@@ -37,6 +37,7 @@ dependencies:
   sms: ^0.2.4
   sms_autofill: ^2.2.0
   webview_flutter: ^2.0.13
+  shared_preferences: ^2.0.8
 
 
 dev_dependencies:
@@ -74,8 +75,8 @@ flutter:
     - "assets/images/below.png"
     - "assets/images/Vector5.png"
     - "assets/images/Icon_attention_circle.png"
-    - "assets/images/kite.png"
-    - "assets/images/Rect.png"
+#    - "assets/images/kite.png"
+#    - "assets/images/Rect.png"
   fonts:
     - family: "Reem Kufi"
       fonts:

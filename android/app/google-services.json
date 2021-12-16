@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "955132379082",
+    "firebase_url": "https://fintapplication-default-rtdb.firebaseio.com",
     "project_id": "fintapplication",
     "storage_bucket": "fintapplication.appspot.com"
   },
@@ -21,6 +22,35 @@
             "certificate_hash": "a58cecbd958d3fb01339f6b84f6a88e21ad0d5d8"
           }
         },
+        {
+          "client_id": "955132379082-jrb3i02605dgc3jd83rpdjnjfq9ddecl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAnda23Z3-Es-nvROtGvMiW3cb4-0WDX9o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "955132379082-jrb3i02605dgc3jd83rpdjnjfq9ddecl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:955132379082:android:bf13a8a6b12eedc3669933",
+        "android_client_info": {
+          "package_name": "com.example.fintmoney"
+        }
+      },
+      "oauth_client": [
         {
           "client_id": "955132379082-jrb3i02605dgc3jd83rpdjnjfq9ddecl.apps.googleusercontent.com",
           "client_type": 3

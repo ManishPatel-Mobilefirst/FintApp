@@ -1,6 +1,7 @@
 import 'package:fint/explore1.dart';
 import 'package:fint/homescreen2.dart';
 import 'package:fint/introduction.dart';
+import 'package:fint/utils/sharedPref.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 // import 'package:flame/flame.dart';
@@ -9,7 +10,7 @@ import 'package:flutter/material.dart';
 
 class Home1 extends StatefulWidget {
   final String user_id;
-  final DatabaseReference message;
+  final  message;
   const Home1({Key? key, required this.user_id, required this.message}) : super(key: key);
   @override
   _Home1State createState() => _Home1State();
@@ -17,6 +18,14 @@ class Home1 extends StatefulWidget {
 
 class _Home1State extends State<Home1> {
   get undefined => null;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print('Check DATA..........:=> ${SharedPref.getBoolValueFromSF(SharedPref.ISDATA)}');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,10 +40,11 @@ class _Home1State extends State<Home1> {
                       height: MediaQuery.of(context).size.height,
                       child: Stack(
                           children: <Widget>[
+                            // AppWidgets.buildText(SharedPref.getStringValueFromSF(SharedPref.NAME)??'',24,AppColors.colorBlack,FontWeight.w400),
                             Positioned(
                                 top: MediaQuery.of(context).size.height*(12/100),
                                 left: MediaQuery.of(context).size.width*(1/10),
-                                child: Text('Hi Elon,', textAlign: TextAlign.left, style: TextStyle(
+                                child: Text(SharedPref.getStringValueFromSF(SharedPref.NAME)??'', textAlign: TextAlign.left, style: TextStyle(
                                     color: Color.fromRGBO(77, 49, 123, 1),
                                     fontFamily: 'Geeza Pro',
                                     fontSize: 24,
